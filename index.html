@@ -38,20 +38,20 @@
     </font>
     </h2> 
 
-    <h3 id="club">
+    <h3>
     <tr>
     <td align="center" valign="middle">
     <font size="7" color="royalblue" face="cursive">
     <b><b><b>
     <div class="sample4">
     <br/>
-    <span class="sample5">
+    <span class="sample5" id="club">
     <big><big><big><big><big><big>
   　コンピュータ部
     </big></big></big></big></big></big>
     </span>
     <br/>
-    <span class="sample6">
+    <span class="sample6" id="club">
     <big><big><big><big><big><big>
     　コンピュータ部
     </big></big></big></big></big></big>
@@ -81,14 +81,20 @@
     </big></big></big></big></big></big>
     </font>
     </h5>
-
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
-      fetch('http://localhost:5000/club')
-        .then(response => response.json())
-        .then(club => club.name)
-        .then(clubName => {
-          document.getElementById("club").textContent = clubName
-        })
+      const fetchFunc = async () => {
+        await axios.get('http://192.168.1.24:8080/webapp-group04/club?ip=192.168.1.33')
+          .then(res => res.data)
+          .then(data => data[0].name)
+          .then(clubName => {
+            document.getElementById("club").textContent = clubName
+          })
+      }
+      window.onload = () => {
+        fetchFunc();
+        setInterval(fetchFunc, 5000);
+      }
     </script>
   </body>
 </html>
